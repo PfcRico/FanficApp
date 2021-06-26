@@ -15,6 +15,7 @@ import com.barys.fanficapp.data.repository.NetworkStatus
 import com.barys.fanficapp.data.vo.FanficDetails
 import com.barys.fanficapp.databinding.ActivitySingleFanficBinding
 
+
 class SingleFanfic : AppCompatActivity() {
 
     private lateinit var viewModel: SingleFanficViewModel
@@ -38,8 +39,7 @@ class SingleFanfic : AppCompatActivity() {
         viewModel = getViewModel(fanficId)
         viewModel.fanficDetails.observe(this, Observer { bindUI(it) })
 
-        viewModel.networkStatus.observe(this, Observer {
-            binding.progressBar.visibility = if (it == NetworkStatus.LOADING) View.VISIBLE else
+        viewModel.networkStatus.observe(this, Observer { binding.progressBar.visibility = if (it == NetworkStatus.LOADING) View.VISIBLE else
         View.GONE
         binding.txtError.visibility = if (it == NetworkStatus.ERROR) View.VISIBLE else View.GONE}
         )
@@ -52,8 +52,10 @@ class SingleFanfic : AppCompatActivity() {
         binding.fanficPublish.text = it.creationDate
         binding.fanficRating.text = it.rating.toString()
 
-        val fanficPicUrl:String = it.picUrl
-        //GlideApp.with(this).load(fanficPicUrl).into(binding.poster)
+        val picUrl:String = it.picUrl
+        com.bumptech.glide.Glide.with(this)
+            .load(picUrl)
+            .into(binding.poster);
 
     }
 
