@@ -8,6 +8,7 @@ data class FanficDetails(
     val genre: String,
     val id: Int,
     val name: String,
+    val text: String,
     val picUrl: String,
     val quantityRatings: Int,
     val rating: Double

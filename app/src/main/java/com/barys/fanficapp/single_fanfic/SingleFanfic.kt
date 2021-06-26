@@ -51,6 +51,7 @@ class SingleFanfic : AppCompatActivity() {
         binding.fanficTitle.text = it.name
         binding.fanficPublish.text = it.creationDate
         binding.fanficRating.text = it.rating.toString()
+        binding.fanficText.text = it.text
 
         val picUrl:String = it.picUrl
         com.bumptech.glide.Glide.with(this)
