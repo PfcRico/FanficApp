@@ -20,11 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
 
-        binding.btn.setOnClickListener {
-            val intent = Intent(this, SingleFanfic::class.java)
-            intent.putExtra("id",1 )
-            this.startActivity(intent)
-        }
+
 
 
 
