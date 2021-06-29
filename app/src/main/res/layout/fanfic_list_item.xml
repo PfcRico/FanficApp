@@ -35,14 +35,26 @@
             android:text="fanfic"
             android:textSize="12sp" />
 
+
+
         <TextView
             android:id="@+id/fanfic_publish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginBottom="4dp"
-            android:maxLength="4"
+            android:maxLength="20"
             android:text="2019"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/fandom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"
+            android:maxLength="20"
+            android:text="fandom"
             android:textSize="12sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

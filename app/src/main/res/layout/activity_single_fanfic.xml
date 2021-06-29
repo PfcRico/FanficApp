@@ -58,25 +58,12 @@
                             android:id="@+id/fanfic_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{fanfic.name}"
+                            android:text="FANFIC NAME HERE"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/fanfic_tagline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="sub title"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="Fanfic Info"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -96,7 +83,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="@{fanfic.creationDate}"
+                                android:text=" 2020 10 11"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -131,7 +118,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="Author"
+                                android:text="Author: "
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
 
@@ -153,7 +140,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="Likes"
+                                android:text="Likes: "
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
 
@@ -162,7 +149,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="LIKES HERE"
+                                android:text="12"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -171,21 +158,6 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Comments"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/fanfic_comments"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="130,000"
-                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <TextView
