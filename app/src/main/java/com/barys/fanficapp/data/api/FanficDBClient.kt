@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 const val BASE_URL = "http://10.0.2.2:9191/"
-const val FIRST_PAGE = 1
+const val FIRST_PAGE = 0
 const val POST_PER_PAGE = 5
 
 object FanficDBClient {
