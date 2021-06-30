@@ -11,7 +11,6 @@
 
 ![alt text](https://github.com/PfcRico/FanficApp/blob/master/demo/scr1.png) 
 ![alt text](https://github.com/PfcRico/FanficApp/blob/master/demo/scr2.png) 
-![alt text](https://github.com/PfcRico/FanficApp/blob/master/demo/scr3.png)
 
 ## Видео работы
 
