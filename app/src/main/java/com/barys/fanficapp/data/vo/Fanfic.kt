@@ -1,6 +1,6 @@
 package com.barys.fanficapp.data.vo
 
-data class Content(
+data class Fanfic(
 
     val avgRating: Double,
     val creationDate: String,

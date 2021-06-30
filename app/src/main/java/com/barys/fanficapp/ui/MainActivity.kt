@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val fanficAdapter = FanficPagedListAdapter(this)
         val gridLayoutManager = GridLayoutManager(this, 3)
 
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = fanficAdapter.getItemViewType(position)
                 if (viewType == fanficAdapter.FANFIC_VIEW_TYPE) return 1
@@ -56,25 +56,28 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.networkStatus.observe(this, Observer {
-            binding.progressBarFanfics.visibility = if(viewModel.listIsEmpty() && it == NetworkStatus.LOADING)
-                View.VISIBLE else View.GONE
-            binding.txtErrorFanfics.visibility = if (viewModel.listIsEmpty() && it == NetworkStatus.ERROR)
-                View.VISIBLE else View.GONE
+            binding.progressBarFanfics.visibility =
+                if (viewModel.listIsEmpty() && it == NetworkStatus.LOADING)
+                    View.VISIBLE else View.GONE
+            binding.txtErrorFanfics.visibility =
+                if (viewModel.listIsEmpty() && it == NetworkStatus.ERROR)
+                    View.VISIBLE else View.GONE
 
-            if (!viewModel.listIsEmpty()){
+            if (!viewModel.listIsEmpty()) {
                 fanficAdapter.setNetworkState(it)
             }
         })
     }
 
-    private fun getViewModel():MainActivityViewModel{
-        return ViewModelProviders.of(this, object: ViewModelProvider.Factory{
-            override fun <T: ViewModel?> create(modelClass:Class<T>): T{
+    private fun getViewModel(): MainActivityViewModel {
+        return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHEKED_CAST")
                 return MainActivityViewModel(fanficRepo) as T
-            } })[MainActivityViewModel::class.java]
-        }
+            }
+        })[MainActivityViewModel::class.java]
     }
+}
 
 
 

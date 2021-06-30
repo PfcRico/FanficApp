@@ -8,8 +8,10 @@ import com.barys.fanficapp.data.vo.FanficDetails
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class FanficNetworkDataSource(private val apiService: FanficDBInterface,
-                              private val compositeDisposable: CompositeDisposable) {
+class FanficNetworkDataSource(
+    private val apiService: FanficDBInterface,
+    private val compositeDisposable: CompositeDisposable
+) {
 
     private val _networkState = MutableLiveData<NetworkStatus>()
     val networkState: LiveData<NetworkStatus>
@@ -17,27 +19,27 @@ class FanficNetworkDataSource(private val apiService: FanficDBInterface,
 
     private val _downloadedFanficResponse = MutableLiveData<FanficDetails>()
     val downloadedFanficResponse: LiveData<FanficDetails>
-    get() = _downloadedFanficResponse
+        get() = _downloadedFanficResponse
 
-    fun fetchFanficDetails(fanficID: Int){
+    fun fetchFanficDetails(fanficID: Int) {
         _networkState.postValue(NetworkStatus.LOADING)
 
-        try{
+        try {
             compositeDisposable.add(
                 apiService.getFanfic(fanficID)
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {
                             _downloadedFanficResponse.postValue(it)
-                        _networkState.postValue(NetworkStatus.LOADED)},
+                            _networkState.postValue(NetworkStatus.LOADED)
+                        },
                         {
                             _networkState.postValue(NetworkStatus.ERROR)
                             it.message?.let { it1 -> Log.e("FanficDataSource", it1) }
                         }
                     )
             )
-        }
-        catch(e: Exception){
+        } catch (e: Exception) {
             Log.e("FanficDataSource", e.message.toString())
         }
 

@@ -1,10 +1,9 @@
-package com.barys.fanficapp.single_fanfic
+package com.barys.fanficapp.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +14,7 @@ import com.barys.fanficapp.data.api.FanficDBInterface
 import com.barys.fanficapp.data.repository.NetworkStatus
 import com.barys.fanficapp.data.vo.FanficDetails
 import com.barys.fanficapp.databinding.ActivitySingleFanficBinding
-
+import com.barys.fanficapp.data.repository.FanficDetailsRepo
 
 class SingleFanfic : AppCompatActivity() {
 
@@ -40,15 +39,17 @@ class SingleFanfic : AppCompatActivity() {
         viewModel = getViewModel(fanficId)
         viewModel.fanficDetails.observe(this, Observer { bindUI(it) })
 
-        viewModel.networkStatus.observe(this, Observer { binding.progressBar.visibility = if (it == NetworkStatus.LOADING) View.VISIBLE else
-        View.GONE
-        binding.txtError.visibility = if (it == NetworkStatus.ERROR) View.VISIBLE else View.GONE}
+        viewModel.networkStatus.observe(this, Observer {
+            binding.progressBar.visibility = if (it == NetworkStatus.LOADING) View.VISIBLE else
+                View.GONE
+            binding.txtError.visibility = if (it == NetworkStatus.ERROR) View.VISIBLE else View.GONE
+        }
         )
 
 
     }
 
-    fun bindUI(it:FanficDetails){
+    fun bindUI(it: FanficDetails) {
 
         binding.fanficAuthor.text = it.author
         binding.fanficTitle.text = it.name
@@ -62,23 +63,24 @@ class SingleFanfic : AppCompatActivity() {
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_TEXT, text)
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT,"Check this fanfic!")
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check this fanfic!")
             startActivity(Intent.createChooser(shareIntent, "Share fanfic via"))
         }
 
-        val picUrl:String = it.picUrl
+        val picUrl: String = it.picUrl
         com.bumptech.glide.Glide.with(this)
             .load(picUrl)
             .into(binding.poster);
 
     }
 
-    private fun getViewModel(fanficId: Int) : SingleFanficViewModel {
-        return ViewModelProviders.of(this, object: ViewModelProvider.Factory {
+    private fun getViewModel(fanficId: Int): SingleFanficViewModel {
+        return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHEKED_CAST")
                 return SingleFanficViewModel(fanficRepo, fanficId) as T
-            }})[SingleFanficViewModel::class.java]
+            }
+        })[SingleFanficViewModel::class.java]
     }
 }
 

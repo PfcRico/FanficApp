@@ -1,7 +1,7 @@
 package com.barys.fanficapp.data.vo
 
 data class FanficResponse(
-    val content: List<Content>,
+    val content: List<Fanfic>,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,

@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.barys.fanficapp.R
 import com.barys.fanficapp.data.repository.NetworkStatus
-import com.barys.fanficapp.data.vo.Content
+import com.barys.fanficapp.data.vo.Fanfic
 import com.barys.fanficapp.databinding.ActivityMainBinding
 import com.barys.fanficapp.databinding.FanficListItemBinding
-import com.barys.fanficapp.single_fanfic.SingleFanfic
+import com.barys.fanficapp.ui.SingleFanfic
 
-class FanficPagedListAdapter(public val context: Context): PagedListAdapter<Content,
+class FanficPagedListAdapter(public val context: Context) : PagedListAdapter<Fanfic,
         RecyclerView.ViewHolder>(FanficDiffCallback()) {
 
     val FANFIC_VIEW_TYPE = 1
@@ -24,17 +24,18 @@ class FanficPagedListAdapter(public val context: Context): PagedListAdapter<Cont
     private var networkStatus: NetworkStatus? = null
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (getItemViewType(position) == FANFIC_VIEW_TYPE){
+        if (getItemViewType(position) == FANFIC_VIEW_TYPE) {
             (holder as FanficViewHolder).bind(getItem(position), context)
         } else {
-            (holder as NetworkStatusItemViewHolder).bind(networkStatus)}
+            (holder as NetworkStatusItemViewHolder).bind(networkStatus)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view: View
 
-        if (viewType == FANFIC_VIEW_TYPE){
+        if (viewType == FANFIC_VIEW_TYPE) {
             view = layoutInflater.inflate(R.layout.fanfic_list_item, parent, false)
             return FanficViewHolder(view)
         } else {
@@ -43,28 +44,28 @@ class FanficPagedListAdapter(public val context: Context): PagedListAdapter<Cont
         }
     }
 
-    private fun hasExtraRow():Boolean {
+    private fun hasExtraRow(): Boolean {
         return networkStatus != null && networkStatus != NetworkStatus.LOADED
     }
 
     override fun getItemCount(): Int {
-        return super.getItemCount() + if(hasExtraRow()) 1 else 0
+        return super.getItemCount() + if (hasExtraRow()) 1 else 0
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (hasExtraRow() && position == itemCount - 1){
+        return if (hasExtraRow() && position == itemCount - 1) {
             NETWORK_VIEW_TYPE
         } else {
             FANFIC_VIEW_TYPE
         }
     }
 
-    class FanficDiffCallback: DiffUtil.ItemCallback<Content>(){
-        override fun areItemsTheSame(oldItem: Content, newItem: Content): Boolean {
+    class FanficDiffCallback : DiffUtil.ItemCallback<Fanfic>() {
+        override fun areItemsTheSame(oldItem: Fanfic, newItem: Fanfic): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Content, newItem: Content): Boolean {
+        override fun areContentsTheSame(oldItem: Fanfic, newItem: Fanfic): Boolean {
             return oldItem == newItem
         }
     }
@@ -75,7 +76,7 @@ class FanficPagedListAdapter(public val context: Context): PagedListAdapter<Cont
         val binding = FanficListItemBinding.bind(view)
 
 
-        fun bind (content: Content?, context: Context){
+        fun bind(content: Fanfic?, context: Context) {
 
             val view = binding.root
 
@@ -88,57 +89,54 @@ class FanficPagedListAdapter(public val context: Context): PagedListAdapter<Cont
                 .load(fanficPoster)
                 .into(binding.fanficPosterCv)
 
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 val intent = Intent(context, SingleFanfic::class.java)
                 intent.putExtra("id", content?.id)
                 context.startActivity(intent)
             }
         }
-        }
+    }
 
-    class NetworkStatusItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
+    class NetworkStatusItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         lateinit var binding: ActivityMainBinding
 
         fun bind(networkStatus: NetworkStatus?) {
 
 
-            if (networkStatus != null && networkStatus == NetworkStatus.LOADING){
+            if (networkStatus != null && networkStatus == NetworkStatus.LOADING) {
                 binding.progressBarFanfics.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 binding.progressBarFanfics.visibility = View.GONE
             }
-            if (networkStatus != null && networkStatus == NetworkStatus.ERROR){
+            if (networkStatus != null && networkStatus == NetworkStatus.ERROR) {
                 binding.txtErrorFanfics.visibility = View.VISIBLE
                 binding.txtErrorFanfics.text = networkStatus.msg
-            }
-            else if (networkStatus != null && networkStatus == NetworkStatus.ENDOFLIST){
+            } else if (networkStatus != null && networkStatus == NetworkStatus.ENDOFLIST) {
                 binding.txtErrorFanfics.visibility = View.VISIBLE
                 binding.txtErrorFanfics.text = networkStatus.msg
-            }
-            else {
+            } else {
                 binding.txtErrorFanfics.visibility = View.GONE
             }
         }
 
     }
-    fun setNetworkState(newNetworkStatus: NetworkStatus){
+
+    fun setNetworkState(newNetworkStatus: NetworkStatus) {
         val previousState: NetworkStatus? = this.networkStatus
         val hadExtraRow = hasExtraRow()
         this.networkStatus = newNetworkStatus
         val hasExtraRow = hasExtraRow()
 
-        if (hadExtraRow != hasExtraRow()){
-            if (hadExtraRow){
+        if (hadExtraRow != hasExtraRow()) {
+            if (hadExtraRow) {
                 notifyItemRemoved(super.getItemCount())
             } else {
                 notifyItemInserted(super.getItemCount())
             }
-        }
-        else if(hasExtraRow && previousState != newNetworkStatus){
+        } else if (hasExtraRow && previousState != newNetworkStatus) {
             notifyItemChanged(itemCount - 1)
         }
     }
-    }
+}
 

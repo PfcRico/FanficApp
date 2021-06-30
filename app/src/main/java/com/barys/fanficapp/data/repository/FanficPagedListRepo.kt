@@ -6,15 +6,15 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.barys.fanficapp.data.api.FanficDBInterface
 import com.barys.fanficapp.data.api.POST_PER_PAGE
-import com.barys.fanficapp.data.vo.Content
+import com.barys.fanficapp.data.vo.Fanfic
 import io.reactivex.disposables.CompositeDisposable
 
-class FanficPagedListRepo (private val apoService: FanficDBInterface){
+class FanficPagedListRepo(private val apoService: FanficDBInterface) {
 
-    lateinit var fanficPagedList: LiveData<PagedList<Content>>
+    lateinit var fanficPagedList: LiveData<PagedList<Fanfic>>
     lateinit var fanficDataSourceFactory: FanficDataSourceFactory
 
-    fun fetchFanficPagedList(compositeDisposable: CompositeDisposable): LiveData<PagedList<Content>>{
+    fun fetchFanficPagedList(compositeDisposable: CompositeDisposable): LiveData<PagedList<Fanfic>> {
         fanficDataSourceFactory = FanficDataSourceFactory(apoService, compositeDisposable)
 
         val config = PagedList.Config.Builder()
@@ -27,9 +27,11 @@ class FanficPagedListRepo (private val apoService: FanficDBInterface){
         return fanficPagedList
     }
 
-    fun getNetworkStatus(): LiveData<NetworkStatus>{
-        return Transformations.switchMap<FanficDataSource, NetworkStatus>(fanficDataSourceFactory.fanficLiveDataSource,
-        FanficDataSource::networkStatus)
+    fun getNetworkStatus(): LiveData<NetworkStatus> {
+        return Transformations.switchMap<FanficDataSource, NetworkStatus>(
+            fanficDataSourceFactory.fanficLiveDataSource,
+            FanficDataSource::networkStatus
+        )
     }
 
 }

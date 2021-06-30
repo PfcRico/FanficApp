@@ -19,8 +19,10 @@ object FanficDBClient {
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(60,
-            TimeUnit.SECONDS)
+            .connectTimeout(
+                60,
+                TimeUnit.SECONDS
+            )
             .addInterceptor(httpLoggingInterceptor)
             .build()
 

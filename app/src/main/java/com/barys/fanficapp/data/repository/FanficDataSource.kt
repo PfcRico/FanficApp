@@ -5,20 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.barys.fanficapp.data.api.FIRST_PAGE
 import com.barys.fanficapp.data.api.FanficDBInterface
-import com.barys.fanficapp.data.vo.Content
+import com.barys.fanficapp.data.vo.Fanfic
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class FanficDataSource(
     private val apiService: FanficDBInterface,
     private val compositeDisposable: CompositeDisposable
-) : PageKeyedDataSource<Int, Content>() {
+) : PageKeyedDataSource<Int, Fanfic>() {
 
     private var page = FIRST_PAGE
 
     val networkStatus: MutableLiveData<NetworkStatus> = MutableLiveData()
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Content>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Fanfic>) {
         networkStatus.postValue(NetworkStatus.LOADING)
         compositeDisposable.add(
             apiService.getFanfics(params.key)
@@ -38,13 +38,13 @@ class FanficDataSource(
         )
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Content>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Fanfic>) {
         TODO("Not yet implemented")
     }
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, Content>
+        callback: LoadInitialCallback<Int, Fanfic>
     ) {
         networkStatus.postValue(NetworkStatus.LOADING)
         compositeDisposable.add(
