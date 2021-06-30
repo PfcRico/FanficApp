@@ -98,10 +98,10 @@ class FanficPagedListAdapter(public val context: Context): PagedListAdapter<Cont
 
     class NetworkStatusItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
-
+        lateinit var binding: ActivityMainBinding
 
         fun bind(networkStatus: NetworkStatus?) {
-            var binding = ActivityMainBinding.bind(this.itemView)
+
 
             if (networkStatus != null && networkStatus == NetworkStatus.LOADING){
                 binding.progressBarFanfics.visibility = View.VISIBLE
