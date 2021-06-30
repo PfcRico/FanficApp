@@ -1,5 +1,6 @@
 package com.barys.fanficapp.single_fanfic
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -43,6 +44,8 @@ class SingleFanfic : AppCompatActivity() {
         View.GONE
         binding.txtError.visibility = if (it == NetworkStatus.ERROR) View.VISIBLE else View.GONE}
         )
+
+
     }
 
     fun bindUI(it:FanficDetails){
@@ -50,8 +53,18 @@ class SingleFanfic : AppCompatActivity() {
         binding.fanficAuthor.text = it.author
         binding.fanficTitle.text = it.name
         binding.fanficPublish.text = it.creationDate
-        binding.fanficRating.text = it.rating.toString()
         binding.fanficText.text = it.text
+        binding.fanficFandom.text = it.fandom
+
+        binding.shareButton.setOnClickListener {
+            val text = binding.fanficText.text.toString()
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT,"Check this fanfic!")
+            startActivity(Intent.createChooser(shareIntent, "Share fanfic via"))
+        }
 
         val picUrl:String = it.picUrl
         com.bumptech.glide.Glide.with(this)
